@@ -1,2 +1,2 @@
 # appkit
-wp-appkit with chat
+wp-appkit with form and social sharing
