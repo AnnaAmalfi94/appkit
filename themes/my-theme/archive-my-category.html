@@ -1,0 +1,148 @@
+<!--
+ * Content is enclosed in <div id="app-content-wrapper"><div id="app-screen"></div></div>
+ * Subhead: is added by add-custom-data.php in the theme's php folder / It expects that the post has a subhead custom field
+ * Handler for image loading error: displayDefaultImage() added in functions.js as a template's parameter
+-->
+
+<div id="content" class="content list-template">
+    
+	<div class="row" style="padding:5px;">
+         
+         
+                                    <!-- Nav tabs --><div class="">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li style="padding-left:0; padding-right:0; text-align:center;" role="presentation" class="active col-xs-3"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">About</a></li>
+                                        <li style="padding-left:0; padding-right:0; text-align:center;" role="presentation" class="col-xs-3"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Portfolio</a></li>
+                                        <li style="padding-left:0; padding-right:0; text-align:center;" role="presentation" class="col-xs-3"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Skill</a></li>
+                                        <li style="padding-left:0; padding-right:0; text-align:center;" role="presentation" class="col-xs-3"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Contact</a></li>
+                                    </ul>
+
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="home"> <img src="img/foto.png" class="img-responsive pull-left">I  am a web & Graphics Designer , I want to do something new & creative in web & Graphing Designing by implementing some crazy and inonnative ideas.Ciao tutto bene?</div>
+                                        <div role="tabpanel" class="tab-pane" id="profile"><!-- Card Projects -->
+        <div class="col-md-6 col-md-offset-3">
+            <div class="card">
+                <div class="card-image">
+                    <img class="img-responsive" src="img/follow.png">
+                    <span class="card-title"></span>
+                </div>
+                
+                <div class="card-content">
+                    <p>This website was realized with bootstrap framework</p>
+                </div>
+                
+                <div class="card-action">
+                    <a href="http://www.gelateriafresco.it/" target="new_blank">Whatch the site</a>
+                   
+                </div>
+            </div>
+        </div></div>
+                                        <div role="tabpanel" class="tab-pane" id="messages">Lorem ipsum</div>
+                                        <div role="tabpanel" class="tab-pane" id="settings">Lorem ipsum
+										
+										
+									
+				  <form role="form" id="contactForm" class="contact-form" data-toggle="validator" class="shake">
+              <div class="form-group">
+                <div class="controls">
+                  <input type="text" id="name" class="form-control" placeholder="Name" required data-error="Please enter your name">
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls">
+                  <input type="email" class="email form-control" id="email" placeholder="Email" required data-error="Please enter your email">
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls">
+                  <input type="text" id="msg_subject" class="form-control" placeholder="Subject" required data-error="Please enter your message subject">
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="controls">
+                  <textarea id="message" rows="7" placeholder="Massage" class="form-control" required data-error="Write your message"></textarea>
+                  <div class="help-block with-errors"></div>
+                </div>  
+              </div>
+
+              <button type="submit" id="submit" class="btn btn-success"></i> Send Message</button>
+              <div id="msgSubmit" class="h3 text-center hidden"></div> 
+              <div class="clearfix"></div>   
+
+            </form>     
+					
+	
+										
+										
+										
+										</div>
+                                    </div>
+</div>
+                                </div>
+</div>
+
+
+
+ <script type="text/javascript">
+  
+ $("#contactForm").on("submit", function (event) {
+    if (event.isDefaultPrevented()) {
+        // handle the invalid form...
+        formError();
+        submitMSG(false, "Did you fill in the form properly?");
+    } else {
+        // everything looks good!
+        event.preventDefault();
+        submitForm();
+    }
+});
+
+
+function submitForm(){
+    // Initiate Variables With Form Content
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var msg_subject = $("#msg_subject").val();
+    var message = $("#message").val();
+
+
+    $.ajax({
+        type: "POST",
+        url: "http://www.maurocangemi.com/prova/form-process.php",
+        data: "name=" + name + "&email=" + email + "&msg_subject=" + msg_subject + "&message=" + message,
+        success : function(text){
+            if (text == "success"){
+                formSuccess();
+            } else {
+                formError();
+                submitMSG(false,text);
+            }
+        }
+    });
+}
+
+function formSuccess(){
+    $("#contactForm")[0].reset();
+    submitMSG(true, "Message Submitted!")
+}
+
+function formError(){
+    $("#contactForm").removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+        $(this).removeClass();
+    });
+}
+
+function submitMSG(valid, msg){
+    if(valid){
+        var msgClasses = "h3 text-center tada animated text-success";
+    } else {
+        var msgClasses = "h3 text-center text-danger";
+    }
+    $("#msgSubmit").removeClass().addClass(msgClasses).text(msg);
+}
+ 
+ </script>
